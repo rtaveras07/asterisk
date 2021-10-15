@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  asterisk:
+    image: andrius/docker-asterisk13
+    network_mode: host
+    restart: always
+    env_file: .env
+    volumes:
+      - ./asterisk/manager.conf:/etc/asterisk/manager.conf
+      - ./asterisk/sip.conf:/etc/asterisk/sip.conf
+      - ./asterisk/extensions.conf:/etc/asterisk/extensions.conf
+      - ./asterisk/confbridge.conf:/etc/asterisk/confbridge.conf
+
+  ahn:
+    build: ahn
+    network_mode: host
+    restart: always
+    env_file: .env
+    volumes:
+      - "./ahn:/ahn"
+      - ./asterisk/manager.conf:/etc/asterisk/manager.conf
+      - ./asterisk/sip.conf:/etc/asterisk/sip.conf
+      - ./asterisk/extensions.conf:/etc/asterisk/extensions.conf
+      - ./asterisk/cdr.conf:/etc/asterisk/cdr.conf
+      - ./asterisk/cel.conf:/etc/asterisk/cel.conf
+
+
